@@ -9,5 +9,5 @@ class Brick:
 
     def clicked(self, event) -> None:
         self.color["fill"] = "black"
-        self.mazeCreator.print_grid()
+        self.mazeCreator.update_grid(self)
 

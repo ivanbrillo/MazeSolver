@@ -33,3 +33,7 @@ class MazeCreator(ctk.CTkFrame):
                 brick = self.matrix[row][col]
                 rect_id = self.canvas.create_rectangle(*brick.position, **brick.color)
                 self.canvas.tag_bind(rect_id, '<Button-1>', brick.clicked)
+
+    def update_grid(self, brick: Brick):
+        rect_id = self.canvas.create_rectangle(*brick.position, **brick.color)
+        self.canvas.tag_bind(rect_id, '<Button-1>', brick.clicked)
