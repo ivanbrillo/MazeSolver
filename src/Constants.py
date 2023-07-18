@@ -1,2 +1,2 @@
-GRID_SIZE = 10
-RECT_SIZE = 50
+
+
