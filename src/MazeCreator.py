@@ -102,7 +102,7 @@ class MazeCreator(ctk.CTkFrame):
             for col in range(self.GRID_SIZE):
                 brick = self.maze[row][col]
                 if brick.visited and brick != self.start and brick != self.end:
-                    self.canvas.create_rectangle(*brick.position, fill="blue", outline="black")
+                    self.canvas.create_rectangle(*brick.position, fill="gray60", outline="blue")
 
         brick = self.end.father
         while brick.father is not None:
