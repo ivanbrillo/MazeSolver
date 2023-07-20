@@ -17,6 +17,7 @@ class MazeCreator(ctk.CTkFrame):
         self.create(self.GRID_SIZE)
         self.start: Brick = None
         self.end: Brick = None
+        self.solved = False
 
     def create(self, size: int):
 
@@ -49,6 +50,9 @@ class MazeCreator(ctk.CTkFrame):
                 self.canvas.tag_bind(rect_id, '<Button-3>', brick.cleared)
 
     def update_grid(self, brick: Brick, create_new: bool, old_str: str):
+
+        if self.solved:
+            self.clear()
 
         if old_str == "g":
             self.start = None
@@ -108,20 +112,28 @@ class MazeCreator(ctk.CTkFrame):
             return
 
         solver = Solver(self.start, self.end, self)
-        solver.solve()
+        if solver.solve():
+            self.solved = True
+        else:
+            return
 
         for row in range(self.GRID_SIZE):
             for col in range(self.GRID_SIZE):
                 brick = self.maze[row][col]
                 if brick.visited and brick != self.start and brick != self.end:
-                    self.canvas.create_rectangle(*brick.position, fill="gray60", outline="blue")
+                    rect = self.canvas.create_rectangle(*brick.position, fill="gray60", outline="blue")
+                    self.canvas.tag_bind(rect, '<Button-1>', lambda event: self.clear())
+                    self.canvas.tag_bind(rect, '<Button-3>', lambda event: self.clear())
 
         brick = self.end.father
         while brick.father is not None:
-            self.canvas.create_rectangle(*brick.position, fill="orange", outline="black")
+            rect = self.canvas.create_rectangle(*brick.position, fill="orange", outline="black")
+            self.canvas.tag_bind(rect, '<Button-1>', lambda event: self.clear())
+            self.canvas.tag_bind(rect, '<Button-3>', lambda event: self.clear())
             brick = brick.father
 
     def clear(self):
+        self.solved = False
         for row in range(self.GRID_SIZE):
             for col in range(self.GRID_SIZE):
                 self.maze[row][col].visited = False

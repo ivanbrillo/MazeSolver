@@ -15,3 +15,6 @@ class LegendMap(ctk.CTkFrame):
 
             text1 = ctk.CTkLabel(self, fg_color="gray15", corner_radius=5, text=option[2], height=10)
             text1.grid(row=1, column=1 + options.index(option), sticky="nsew", padx=(18, 20), pady=(2, 10))
+
+        text1 = ctk.CTkLabel(self, fg_color="gray15", corner_radius=5, text="- Left click to add a brick\n- Right click to delete a brick")
+        text1.grid(row=0, column=6, sticky="nsew", padx=(18, 20), pady=(10, 10), rowspan=2, ipadx=20)
