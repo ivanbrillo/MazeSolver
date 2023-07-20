@@ -31,6 +31,10 @@ class UI(ctk.CTk):
     def disable_brick(self, brick_type: str):
         self.menu.disable_brick(brick_type)
 
+    def enable_brick(self, brick_type: str):
+        self.menu.enable_brick(brick_type)
+
+
     def load(self):
         self.maze.load_maze_from_file()
 

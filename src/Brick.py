@@ -15,12 +15,13 @@ class Brick:
         self.father = None
 
     def cleared(self, event) -> None:
+        str_old = self.get_str()
         self.color["fill"] = "gray90"
-        self.mazeCreator.update_grid(self, False)
+        self.mazeCreator.update_grid(self, False, str_old)
 
     def clicked(self, event) -> None:
-        self.color["fill"] = "black"
-        self.mazeCreator.update_grid(self, True)
+        # self.color["fill"] = "black"
+        self.mazeCreator.update_grid(self, True, self.get_str())
 
     def set_type(self, brick_type: str):
         self.color["fill"] = type_color_map[brick_type]

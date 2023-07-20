@@ -79,7 +79,7 @@ class SettingsMenu(ctk.CTkFrame, ABC):
     def _update_size(self, size: int) -> None:
         self.size_text.configure(text=f"{size}x{size}")
         for button in self.button_brick_type:
-            button.configure(state="enabled")
+            button.configure(state="normal")
         self.solve_button.configure(state="disabled")
         self.brick_type.set("Wall")
         self.ui.update(size)
@@ -91,7 +91,16 @@ class SettingsMenu(ctk.CTkFrame, ABC):
         for button in self.button_brick_type:
             if button.cget("text") == brick_type and brick_type != "Wall":
                 button.configure(state="disabled")
-                self.brick_type.set("Wall")
+        self.brick_type.set("Wall")
 
         if self.button_brick_type[1].cget("state") == "disabled" and self.button_brick_type[2].cget("state") == "disabled":
-            self.solve_button.configure(state="enabled")
+            self.solve_button.configure(state="normal")
+
+    def enable_brick(self, brick_type: str):
+        if brick_type == "r":
+            self.button_brick_type[2].configure(state="normal")
+            self.solve_button.configure(state="disabled")
+
+        if brick_type == "g":
+            self.button_brick_type[1].configure(state="normal")
+            self.solve_button.configure(state="disabled")

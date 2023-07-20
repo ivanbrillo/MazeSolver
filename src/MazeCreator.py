@@ -36,11 +36,27 @@ class MazeCreator(ctk.CTkFrame):
         for row in range(self.GRID_SIZE):
             for col in range(self.GRID_SIZE):
                 brick = self.maze[row][col]
+
+                if brick.get_str() == "g":
+                    self.start = brick
+                    self.ui.disable_brick("StartPoint")
+                if brick.get_str() == "r":
+                    self.end = brick
+                    self.ui.disable_brick("EndPoint")
+
                 rect_id = self.canvas.create_rectangle(*brick.position, **brick.color)
                 self.canvas.tag_bind(rect_id, '<Button-1>', brick.clicked)
                 self.canvas.tag_bind(rect_id, '<Button-3>', brick.cleared)
 
-    def update_grid(self, brick: Brick, create_new: bool):
+    def update_grid(self, brick: Brick, create_new: bool, old_str: str):
+
+        if old_str == "g":
+            self.start = None
+        if old_str == "r":
+            self.end = None
+
+        self.ui.enable_brick(old_str)
+
         if create_new:
             brick.set_type(self.brick_type.get())
 
@@ -53,7 +69,6 @@ class MazeCreator(ctk.CTkFrame):
         rect_id = self.canvas.create_rectangle(*brick.position, **brick.color)
         self.canvas.tag_bind(rect_id, '<Button-1>', brick.clicked)
         self.canvas.tag_bind(rect_id, '<Button-3>', brick.cleared)
-
 
     def save_maze_to_file(self):
         with open("maze.txt", "w") as file:
@@ -112,7 +127,3 @@ class MazeCreator(ctk.CTkFrame):
                 self.maze[row][col].visited = False
                 self.maze[row][col].father = None
         self.print_grid()
-
-
-
-
