@@ -30,5 +30,4 @@ class Solver:
         while len(self.edge_brick) != 0:
             if self._add_adj_brick():
                 return True
-
         return False

@@ -10,7 +10,7 @@ class SettingsMenu(ctk.CTkFrame, ABC):
         super().__init__(master, width=240, border_width=1)
         self.alghoritm = tkinter.StringVar(value="")
         self.brick_type = tkinter.StringVar(value="Wall")
-        self.master = master
+        self.ui = master
         self._menu_setup()
 
     def _menu_setup(self):
@@ -29,10 +29,10 @@ class SettingsMenu(ctk.CTkFrame, ABC):
         textbox = ctk.CTkLabel(saving_frame, fg_color="gray25", corner_radius=5, text="Saving Box")
         textbox.grid(row=0, column=0, sticky="nsew")
 
-        load_button = ctk.CTkButton(saving_frame, fg_color="gray25", border_width=1, text="Load from File", command=self.master.load)
+        load_button = ctk.CTkButton(saving_frame, fg_color="gray25", border_width=1, text="Load from File", command=self.ui.load)
         load_button.grid(row=1, column=0, padx=(25, 25), pady=(10, 5), sticky="nwse")
 
-        store_button = ctk.CTkButton(saving_frame, fg_color="gray25", border_width=1, text="Save to File", command=self.master.save)
+        store_button = ctk.CTkButton(saving_frame, fg_color="gray25", border_width=1, text="Save to File", command=self.ui.save)
         store_button.grid(row=2, column=0, padx=(25, 25), pady=(5, 10), sticky="nwse")
 
     def _solving_frame_setup(self):
@@ -40,17 +40,14 @@ class SettingsMenu(ctk.CTkFrame, ABC):
         solving_frame.grid(row=2, column=0, padx=(20, 20), pady=(5, 0), sticky="nwse")
         solving_frame.grid_columnconfigure(index=0, weight=1)
 
-        textbox = ctk.CTkLabel(solving_frame, fg_color="gray25", corner_radius=5, text="Select the solving Alghorithm")
+        textbox = ctk.CTkLabel(solving_frame, fg_color="gray25", corner_radius=5, text="Solving box")
         textbox.grid(row=0, column=0, sticky="nsew")
 
-        available_mode = (("BFS", (10, 5)), ("DFS", (5, 5)))
-        for mode in available_mode:
-            button = ctk.CTkRadioButton(solving_frame, variable=self.alghoritm, text=mode[0], border_width_unchecked=2, radiobutton_width=18,
-                                        radiobutton_height=18)
-            button.grid(row=available_mode.index(mode) + 1, column=0, pady=mode[1])
-
-        self.solve_button = ctk.CTkButton(solving_frame, fg_color="gray25", border_width=1, text="Solve", state="disabled", command=self.master.solve)
+        self.solve_button = ctk.CTkButton(solving_frame, fg_color="gray25", border_width=1, text="Solve", state="disabled", command=self.ui.solve)
         self.solve_button.grid(row=3, column=0, padx=(25, 25), pady=(10, 5), sticky="nwse")
+
+        self.clear_button = ctk.CTkButton(solving_frame, fg_color="gray25", border_width=1, text="Clear Result", state="disabled", command=self.ui.clear)
+        self.clear_button.grid(row=4, column=0, padx=(25, 25), pady=(5, 10), sticky="nwse")
 
     def _creation_frame(self):
 
@@ -81,7 +78,11 @@ class SettingsMenu(ctk.CTkFrame, ABC):
 
     def _update_size(self, size: int) -> None:
         self.size_text.configure(text=f"{size}x{size}")
-        self.master.update(size)
+        for button in self.button_brick_type:
+            button.configure(state="enabled")
+        self.solve_button.configure(state="disabled")
+        self.brick_type.set("Wall")
+        self.ui.update(size)
 
     def get_brick_type(self):
         return self.brick_type
@@ -94,5 +95,3 @@ class SettingsMenu(ctk.CTkFrame, ABC):
 
         if self.button_brick_type[1].cget("state") == "disabled" and self.button_brick_type[2].cget("state") == "disabled":
             self.solve_button.configure(state="enabled")
-
-

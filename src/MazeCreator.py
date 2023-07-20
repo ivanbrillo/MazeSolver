@@ -50,13 +50,10 @@ class MazeCreator(ctk.CTkFrame):
             self.end = brick
 
         self.ui.disable_brick(self.brick_type.get())
-
         rect_id = self.canvas.create_rectangle(*brick.position, **brick.color)
         self.canvas.tag_bind(rect_id, '<Button-1>', brick.clicked)
         self.canvas.tag_bind(rect_id, '<Button-3>', brick.cleared)
 
-        # print(self.get_adjatient(brick))
-        # self.save_maze_to_file()
 
     def save_maze_to_file(self):
         with open("maze.txt", "w") as file:
@@ -108,4 +105,14 @@ class MazeCreator(ctk.CTkFrame):
         while brick.father is not None:
             self.canvas.create_rectangle(*brick.position, fill="orange", outline="black")
             brick = brick.father
+
+    def clear(self):
+        for row in range(self.GRID_SIZE):
+            for col in range(self.GRID_SIZE):
+                self.maze[row][col].visited = False
+                self.maze[row][col].father = None
+        self.print_grid()
+
+
+
 
