@@ -6,10 +6,13 @@ color_character_map = dict(gray90="-", black="b", green="g", red="r")
 
 class Brick:
 
-    def __init__(self, row: int, col: int, size: int, mazeCreator, type="-"):
+    def __init__(self, row: int, col: int, size: int, maze_creator, brick_type="-"):
         self.position = (col * size, row * size, (col + 1) * size, (row + 1) * size)
-        self.color = dict(fill=list(color_character_map.keys())[list(color_character_map.values()).index(type)], outline="black")
-        self.mazeCreator = mazeCreator
+        self.indexes = (row, col)
+        self.color = dict(fill=list(color_character_map.keys())[list(color_character_map.values()).index(brick_type)], outline="black")
+        self.mazeCreator = maze_creator
+        self.visited = False
+        self.father = None
 
     def cleared(self, event) -> None:
         self.color["fill"] = "gray90"

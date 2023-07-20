@@ -20,6 +20,9 @@ class UI(ctk.CTk):
     def update(self, size) -> None:
         self.maze.create(size)
 
+    def solve(self):
+        self.maze.solve()
+
     def disable_brick(self, brick_type: str):
         self.menu.disable_brick(brick_type)
 

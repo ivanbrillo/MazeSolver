@@ -49,8 +49,8 @@ class SettingsMenu(ctk.CTkFrame, ABC):
                                         radiobutton_height=18)
             button.grid(row=available_mode.index(mode) + 1, column=0, pady=mode[1])
 
-        tkButton = ctk.CTkButton(solving_frame, fg_color="gray25", border_width=1, text="Solve", state="disabled")
-        tkButton.grid(row=3, column=0, padx=(25, 25), pady=(10, 5), sticky="nwse")
+        self.solve_button = ctk.CTkButton(solving_frame, fg_color="gray25", border_width=1, text="Solve", state="disabled", command=self.master.solve)
+        self.solve_button.grid(row=3, column=0, padx=(25, 25), pady=(10, 5), sticky="nwse")
 
     def _creation_frame(self):
 
@@ -91,3 +91,8 @@ class SettingsMenu(ctk.CTkFrame, ABC):
             if button.cget("text") == brick_type and brick_type != "Wall":
                 button.configure(state="disabled")
                 self.brick_type.set("Wall")
+
+        if self.button_brick_type[1].cget("state") == "disabled" and self.button_brick_type[2].cget("state") == "disabled":
+            self.solve_button.configure(state="enabled")
+
+
