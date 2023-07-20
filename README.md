@@ -1,4 +1,4 @@
-# KLOTSKI PUZZLE
+# Maze Creator and Solver
 
 Welcome to my exciting project! In this Python and Tkinter-based maze solver, I've developed a powerful tool that can conquer any maze thrown my way. Leveraging the widely acclaimed Breadth-First Search (BFS) algorithm, my application expertly navigates through mazes of varying complexities, providing efficient and optimal solutions.
 
